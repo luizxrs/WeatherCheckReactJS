@@ -33,7 +33,8 @@ import {
   ErrorMessage,
   CloseButtonIcon,
   SearchButtonIcon,
-  ClearMessage
+  ClearMessage,
+  SaveMessage
 } from './AppStyles.js';
 import { useEffect, useState } from 'react';
 import axios from 'axios'
@@ -43,16 +44,23 @@ import { ThemeProvider } from 'styled-components';
 import blue from './styles/themes/blue';
 
 function App() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState(JSON.parse(localStorage.getItem('tabs')) || [])
   const [cityName, setCityName] = useState('')
   const [response, setResponse] = useState(true)
   const [showErrorMessage, setShowErrorMessage] = useState(false)
   const [showClearMessage, setShowClearMessage] = useState(false)
+  const [showSaveMessage, setShowSaveMessage] = useState(false)
   const [errorText, setErrorText] = useState('')
   const [weatherIcon, setWeatherIcon] = useState('')
 
+  console.log('render')
+
   const saveTabs = () => {
+    setShowSaveMessage(true)
     localStorage.setItem('tabs', JSON.stringify(data))
+    setTimeout(() => {
+      setShowSaveMessage(false)
+    }, 2000)
   }
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&lang=pt_BR&appid=c2b2ebb773ffc213cf4235c8a208f775`
@@ -68,15 +76,6 @@ function App() {
   useEffect(() => {
     if (cityName.length > 0) setShowErrorMessage(false);
   }, [cityName]);
-
-  
-  useEffect(() => {
-    //Verificar local storage e setar no set data
-    //const itensSalvos = JSON.parse(localStorage.getItem("tabs"))
-    //setData()
-    // const savedData = JSON.parse(localStorage.getItem("tabs"));
-    // setData(savedData)
-  }, []);
 
 
   const searchCity = () => {
@@ -112,12 +111,6 @@ function App() {
       <Container>
         <GlobalStyle />
         <Header>
-          <SaveItems
-            onClick={() => saveTabs()}
-          >Salvar</SaveItems>
-          <ErrorMessage
-            show={showErrorMessage}
-          >{errorText}</ErrorMessage>
           <SearchBox>
             <SearchInput placeholder='Digite uma cidade!'
               value={cityName}
@@ -130,6 +123,12 @@ function App() {
               <SearchButtonIcon />
             </SearchButton>
           </SearchBox>
+          <SaveItems
+            onClick={() => saveTabs()}
+          >Salvar<SaveMessage show={showSaveMessage}>Salvo!</SaveMessage></SaveItems>
+          <ErrorMessage
+            show={showErrorMessage}
+          >{errorText}</ErrorMessage>
 
           <ClearAll onClick={() => clearData()}>
             Limpar

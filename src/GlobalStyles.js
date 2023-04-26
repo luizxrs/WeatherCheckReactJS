@@ -10,6 +10,9 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         font-family: 'Poppins', sans-serif;
+        background: radial-gradient(circle, #8EA7E9 0%, #7286D3 100%);
+        min-height: 100vh;
+        height: 100%; 
     }
 
     h1 {   

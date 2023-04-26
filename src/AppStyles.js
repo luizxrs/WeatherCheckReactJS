@@ -17,10 +17,9 @@ export const Container = styled.div`
   z-index: 1;
   flex-direction: column;
   align-items: center;
-  min-height: 95vh;
+  min-height: 100vh;
   height: 100%; 
-  padding-bottom: 5vh;
-  background: radial-gradient(circle, #8EA7E9 0%, #7286D3 100%); 
+  margin-bottom: 5vh;
 `
 
 export const ClearAll = styled.div`
@@ -34,24 +33,39 @@ export const ClearAll = styled.div`
   font-weight: 600;
   width: 100%;
   max-width: 15rem;
-  margin-top: 5rem;
   box-shadow: .5rem .5rem 1.5rem -.1rem rgba(0, 0, 0, .3) ;
   background-color: ${FourthColor};
   border-radius: 3rem;
   min-height: 6rem;
-  margin-bottom: 8rem;
-  margin-right: 10rem;
+  margin: 5rem 3vw 8rem 0;
   cursor: pointer;
-  transition: all 1s cubic-bezier(.175,.885,.32,1);
+  transition: all 1s cubic-bezier(.175,.885,.32,1);order: 3;
   :hover {
     transform: scale(1.1);
     letter-spacing: .3rem;
     box-shadow: .7rem .7rem 2rem -.4rem rgba(0, 0, 0, .5) ;
     background-color: ${FifthColor};
   }
+
+  @media (max-width: 1080px) {
+    order: 2;
+    margin: 0;
+  }
+  
 `
 
 export const ClearMessage = styled.div`
+  position: absolute;
+  color: ${FifthColor};
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: .2rem;
+  transition: all 2s cubic-bezier(.175,.885,.32,1);
+  margin-top: ${(props) => props.show ? "-9rem" : "-4rem"};
+  opacity: ${(props) => props.show ? "100" : "0"};
+`
+
+export const SaveMessage = styled.div`
   position: absolute;
   color: ${FifthColor};
   font-weight: 700;
@@ -72,15 +86,12 @@ font-size: 2rem;
 font-weight: 600;
 width: 100%;
 max-width: 15rem;
-margin-top: 5rem;
 box-shadow: .5rem .5rem 1.5rem -.1rem rgba(0, 0, 0, .3) ;
 background-color: ${FourthColor};
 border-radius: 3rem;
 min-height: 6rem;
-display: flex;
-align-items: center;
-margin-bottom: 8rem;
-margin-left: 10rem;
+margin: 5rem 0 8rem 3vw;
+order: 1;
 cursor: pointer;
     transition: all 1s cubic-bezier(.175,.885,.32,1);
 :hover {
@@ -89,13 +100,38 @@ cursor: pointer;
   box-shadow: .7rem .7rem 2rem -.4rem rgba(0, 0, 0, .5) ;
   background-color: ${FifthColor};
 }
+
+
+@media (max-width: 1080px) {
+    order: 3;
+    margin: 0;
+  }
 `
 
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+
+  @media (max-width: 1080px) {
+    margin-bottom: 5rem;
+    align-items: center;
+    justify-content: center;
+    gap: 6rem;
+    max-width: 60vw;
+    flex-wrap: wrap;
+  }
 `
+
+// export const Header = styled.div`
+//   display: flex;
+//   flex-wrap: wrap;
+//   justify-content: center;
+//   max-height: 10vh;
+//   flex: 1 1 25rem;
+//   gap: 15rem;
+//   width: 100;
+// `
 
 export const ErrorMessage = styled.div`
   position: absolute;
@@ -113,21 +149,21 @@ export const ErrorMessage = styled.div`
 
 export const SearchInput = styled.input`
   all: unset;
-  max-width: 43.8rem;
+  width: 1vw;
   flex: 1;
-  margin: 0 3rem;
+  margin: 0 0 0 3rem;
   justify-content: center;
   height: 3.5rem;
   font-size: 2rem;
   font-weight: 600;
-  color: ${FifthColor};
   color: ${FirstColor};
 `
 
 export const SearchBox = styled.div`
     z-index: 2;
     width: 100%;
-    max-width: 55rem;
+    max-width: 55vw;
+    min-width: 55rem;
     margin-top: 5rem;
     box-shadow: .5rem .5rem 1.5rem -.1rem rgba(0, 0, 0, .3) ;
     background-color: ${FourthColor};
@@ -138,14 +174,30 @@ export const SearchBox = styled.div`
     justify-content: space-between;
     margin-bottom: 8rem;
     transition: all 1s cubic-bezier(.175,.885,.32,1);
+    order: 2;
     :hover {
       transform: scale(1.03);
       box-shadow: .7rem .7rem 2rem -.4rem rgba(0, 0, 0, .5) ;
       background-color: ${FifthColor};
-      max-width: 65rem;
+      max-width: 60vw;
       letter-spacing: .3rem;
     }
+
     
+    @media (max-width: 1080px) {
+      order: 1;
+      margin-bottom: -2rem;
+    }
+
+    
+    @media (max-width: 500px) {
+      min-width: 30rem;
+      :hover {
+        min-width: 35rem;
+      }
+
+    }
+      
   `
 
 export const SearchButton = styled.button`
@@ -175,8 +227,9 @@ export const ContentField = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 100%;
-  max-width: 110rem;
+  width: 100vw;
+  max-width: 90vw;
+  max-height: 10vh;
   color: ${FirstColor};
   flex: 1 1 25rem;
   gap: 2rem;
@@ -184,7 +237,7 @@ export const ContentField = styled.div`
 export const CloseButtonIcon = styled(RiCloseLine)`
   color: ${FirstColor};
   transform: scale(0);
-  transition: all 2s cubic-bezier(.175,.885,.32,1);
+  transition: all 1s cubic-bezier(.175,.885,.32,1);
 `
 
 export const CloseButton = styled.button`
@@ -208,7 +261,7 @@ export const WeatherInfoWindow = styled.div`
     min-width: 25rem;
     max-width: 25rem;
     max-height: 29.5rem;
-    transition: all 2s cubic-bezier(.175,.885,.32,1);
+    transition: all 1s cubic-bezier(.175,.885,.32,1);
     :hover {
       transform: scale(1.05);
       background-color: ${FifthColor};
