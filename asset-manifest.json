@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/WeatherCheckReactJS/static/css/main.31d6cfe0.css",
+    "main.js": "/WeatherCheckReactJS/static/js/main.898b880c.js",
+    "index.html": "/WeatherCheckReactJS/index.html",
+    "static/media/blue": "/WeatherCheckReactJS/static/media/blue.e9266036172322c624b5",
+    "main.898b880c.js.map": "/WeatherCheckReactJS/static/js/main.898b880c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.31d6cfe0.css",
+    "static/js/main.898b880c.js"
+  ]
+}
