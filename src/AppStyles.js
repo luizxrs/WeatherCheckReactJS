@@ -40,14 +40,14 @@ export const ChangeTheme = styled.div`
   .close-icon {
     transition: all .5s cubic-bezier(.175,.885,.32,1);
     opacity: ${props => props.isOpen ? '100%' : '0'};
-    transform: ${props => props.isOpen ? 'rotate(90deg)': 'rotate(0deg)'};
+    transform: ${props => props.isOpen ? 'rotate(90deg)' : 'rotate(0deg)'};
     position: absolute;
   }
   
   .paint-icon {
     transition: all .5s cubic-bezier(.175,.885,.32,1);
     opacity: ${props => props.isOpen ? '0' : '100%'};
-    transform: ${props => props.isOpen ? 'rotate(90deg)': 'rotate(0deg)'};
+    transform: ${props => props.isOpen ? 'rotate(90deg)' : 'rotate(0deg)'};
     position: absolute;
   }
   
@@ -162,6 +162,15 @@ export const ClearMessage = styled.div`
   transition: all 2s cubic-bezier(.175,.885,.32,1);
   margin-top: ${(props) => props.show ? "-9rem" : "-4rem"};
   opacity: ${(props) => props.show ? "100" : "0"};
+  
+  @media (max-width: 1080px) {
+      margin-top: ${(props) => props.show ? "9rem" : "4rem"}; 
+  }
+
+  @media (max-width: 610px) {
+    margin-top: ${(props) => props.show ? "9rem" : "4rem"}; 
+  }
+
 `
 
 export const SaveMessage = styled.div`
@@ -173,6 +182,16 @@ export const SaveMessage = styled.div`
   transition: all 2s cubic-bezier(.175,.885,.32,1);
   margin-top: ${(props) => props.show ? "-9rem" : "-4rem"};
   opacity: ${(props) => props.show ? "100" : "0"};
+
+  @media (max-width: 1080px) {
+      margin-top: ${(props) => props.show ? "9rem" : "4rem"}; 
+  }
+
+  @media (max-width: 610px) {
+    margin-top: ${(props) => props.show ? "9rem" : "4rem"}; 
+  }
+
+
 `
 
 export const SaveItems = styled.div`
@@ -274,12 +293,13 @@ export const SearchBox = styled.div`
     
     @media (max-width: 1080px) {
       order: 1;
-      margin-bottom: 0rem;
+      margin-bottom: 0;
     }
 
     
     @media (max-width: 610px) {
       min-width: 30rem;
+      margin-bottom: 2rem;
       :hover {
         min-width: 35rem;
       }
@@ -349,7 +369,6 @@ export const WeatherInfoWindow = styled.div`
     min-width: 25rem;
     max-width: 25rem;
     max-height: 29.5rem;
-    cursor: grab;
     transition: all 1s cubic-bezier(.175,.885,.32,1);
     :hover {
       transform: scale(1.05);
@@ -359,11 +378,6 @@ export const WeatherInfoWindow = styled.div`
       transform: scale(1.2);
     }
 
-    ${props => props.isDragging && css`
-      border: 2rem;
-      background-color: red;
-      cursor: grabbing;
-    `}
 `;
 
 export const HeaderCityInfo = styled.div`
