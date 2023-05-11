@@ -1,15 +1,8 @@
-import styled from "styled-components/macro";
+import styled, { css } from "styled-components/macro";
 import { RiCloseLine } from 'react-icons/ri'
 import { MdSearch } from 'react-icons/md'
-
-
-
-const FirstColor = '#7286D3;'
-const SecondColor = '#7999D9;'
-const ThirdColor = '#8EA7E9;'
-const FourthColor = 'rgb(215, 215, 255);'
-const FifthColor = '#E5E0FF;'
-
+import { lighten, darken, modularScale } from 'polished'
+import blue from "./styles/themes/blue";
 
 
 export const Container = styled.div`
@@ -18,12 +11,118 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  height: 100%; 
-  margin-bottom: 5vh;
+  height: 100%;
+  position: relative;
 `
 
+export const ChangeTheme = styled.div`
+  min-width: 6rem;
+  min-height: 6rem;
+  border-radius: 50%;
+  background-color: ${props => props.theme.colors.fifth};
+  position: fixed;
+  bottom: 4rem;
+  left: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${props => props.theme.colors.primary};
+  z-index: 9999;
+  box-shadow: .5rem .5rem 1.5rem -.1rem rgba(0, 0, 0, .3) ;
+  cursor: pointer;
+  transition: all 1s cubic-bezier(.175,.885,.32,1);
+  :hover{
+    transform: scale(1.1);
+    background-color: white;
+    color: ${props => props.theme.colors.secondary};
+    box-shadow: .7rem .7rem 2rem -.4rem rgba(0, 0, 0, .5);
+  }
+  .close-icon {
+    transition: all .5s cubic-bezier(.175,.885,.32,1);
+    opacity: ${props => props.isOpen ? '100%' : '0'};
+    transform: ${props => props.isOpen ? 'rotate(90deg)': 'rotate(0deg)'};
+    position: absolute;
+  }
+  
+  .paint-icon {
+    transition: all .5s cubic-bezier(.175,.885,.32,1);
+    opacity: ${props => props.isOpen ? '0' : '100%'};
+    transform: ${props => props.isOpen ? 'rotate(90deg)': 'rotate(0deg)'};
+    position: absolute;
+  }
+  
+  svg {
+    width: 3rem;
+    height: 3rem;
+  }
+`;
+
+export const StyledMenu = styled.div`
+  background: ${props => props.theme.colors.fifth};
+  position: fixed;
+  bottom: 4rem;
+  left: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${props => props.theme.colors.primary};
+  z-index: 9999;
+  transition: all 1s cubic-bezier(.175,.885,.32,1);
+  border-radius: 3rem;
+  box-shadow: ${props => props.isOpen ? '0 0 4rem rgba(0, 0, 0, .4)' : 'none'};
+  width: 6rem;
+  height: ${props => props.isOpen ? '40rem' : '6rem'};
+  overflow: hidden;
+`
+
+export const MenuItemsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+  min-height: 70%;
+  position: absolute;
+  top: 4rem;
+`
+export const MenuHeader = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  margin-top: 2rem;
+  gap: 1rem;
+  padding: 1rem;
+
+  max-width: 100%;
+`
+
+export const CloseMenuButton = styled.div`
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  box-shadow: .2rem .2rem .6rem -.1rem rgba(0, 0, 0, .6) ;
+  border: ${props => `.2rem solid ${darken(.1, props.Color.toString())}`};
+
+  transition: all 1s cubic-bezier(.175,.885,.32,1);
+  box-shadow: .1rem .1rem .5rem rgba(0 ,0 ,0, .1 );
+
+  cursor: pointer;
+
+  background-color: ${props => props.Color}; 
+  
+  &:hover {
+    background-color: ${props => `${lighten(.2, props.Color.toString())}`};
+    transform: scale(1.1);
+  }
+`
+
+
+
 export const ClearAll = styled.div`
-  color: ${FirstColor};
+  color: ${props => props.theme.colors.primary};
   letter-spacing: .1rem;
   position: relative;
   display: flex;
@@ -34,7 +133,7 @@ export const ClearAll = styled.div`
   width: 100%;
   max-width: 15rem;
   box-shadow: .5rem .5rem 1.5rem -.1rem rgba(0, 0, 0, .3) ;
-  background-color: ${FourthColor};
+  background-color: ${props => props.theme.colors.fourth};
   border-radius: 3rem;
   min-height: 6rem;
   margin: 5rem 3vw 8rem 0;
@@ -44,7 +143,7 @@ export const ClearAll = styled.div`
     transform: scale(1.1);
     letter-spacing: .3rem;
     box-shadow: .7rem .7rem 2rem -.4rem rgba(0, 0, 0, .5) ;
-    background-color: ${FifthColor};
+    background-color: ${props => props.theme.colors.fifth};
   }
 
   @media (max-width: 1080px) {
@@ -56,7 +155,7 @@ export const ClearAll = styled.div`
 
 export const ClearMessage = styled.div`
   position: absolute;
-  color: ${FifthColor};
+  color: ${props => props.theme.colors.fifth};
   font-weight: 700;
   font-size: 1.5rem;
   letter-spacing: .2rem;
@@ -67,7 +166,7 @@ export const ClearMessage = styled.div`
 
 export const SaveMessage = styled.div`
   position: absolute;
-  color: ${FifthColor};
+  color: ${props => props.theme.colors.fifth};
   font-weight: 700;
   font-size: 1.5rem;
   letter-spacing: .2rem;
@@ -77,7 +176,7 @@ export const SaveMessage = styled.div`
 `
 
 export const SaveItems = styled.div`
-color: ${FirstColor};
+color: ${props => props.theme.colors.primary};
 letter-spacing: .1rem;
 display: flex;
 align-items: center;
@@ -87,7 +186,7 @@ font-weight: 600;
 width: 100%;
 max-width: 15rem;
 box-shadow: .5rem .5rem 1.5rem -.1rem rgba(0, 0, 0, .3) ;
-background-color: ${FourthColor};
+background-color: ${props => props.theme.colors.fourth};
 border-radius: 3rem;
 min-height: 6rem;
 margin: 5rem 0 8rem 3vw;
@@ -98,7 +197,7 @@ cursor: pointer;
   transform: scale(1.1);
   letter-spacing: .3rem;
   box-shadow: .7rem .7rem 2rem -.4rem rgba(0, 0, 0, .5) ;
-  background-color: ${FifthColor};
+  background-color: ${props => props.theme.colors.fifth};
 }
 
 
@@ -115,27 +214,16 @@ export const Header = styled.div`
 
   @media (max-width: 1080px) {
     margin-bottom: 5rem;
-    align-items: center;
     justify-content: center;
-    gap: 6rem;
+    gap: 1rem;
     max-width: 60vw;
     flex-wrap: wrap;
   }
+
 `
-
-// export const Header = styled.div`
-//   display: flex;
-//   flex-wrap: wrap;
-//   justify-content: center;
-//   max-height: 10vh;
-//   flex: 1 1 25rem;
-//   gap: 15rem;
-//   width: 100;
-// `
-
 export const ErrorMessage = styled.div`
   position: absolute;
-  color: ${FourthColor};
+  color: ${props => props.theme.colors.fourth};
   font-weight: 700;
   font-size: 1.5rem;
   letter-spacing: .2rem;
@@ -156,17 +244,17 @@ export const SearchInput = styled.input`
   height: 3.5rem;
   font-size: 2rem;
   font-weight: 600;
-  color: ${FirstColor};
+  color: ${props => props.theme.colors.primary};
 `
 
 export const SearchBox = styled.div`
     z-index: 2;
     width: 100%;
     max-width: 55vw;
-    min-width: 55rem;
+    min-width: 55vw;
     margin-top: 5rem;
     box-shadow: .5rem .5rem 1.5rem -.1rem rgba(0, 0, 0, .3) ;
-    background-color: ${FourthColor};
+    background-color: ${props => props.theme.colors.fourth};
     border-radius: 3rem;
     min-height: 6rem;
     display: flex;
@@ -178,19 +266,19 @@ export const SearchBox = styled.div`
     :hover {
       transform: scale(1.03);
       box-shadow: .7rem .7rem 2rem -.4rem rgba(0, 0, 0, .5) ;
-      background-color: ${FifthColor};
-      max-width: 60vw;
+      background-color: ${props => props.theme.colors.fifth};
+      min-width: 60vw;
       letter-spacing: .3rem;
     }
 
     
     @media (max-width: 1080px) {
       order: 1;
-      margin-bottom: -2rem;
+      margin-bottom: 0rem;
     }
 
     
-    @media (max-width: 500px) {
+    @media (max-width: 610px) {
       min-width: 30rem;
       :hover {
         min-width: 35rem;
@@ -201,7 +289,7 @@ export const SearchBox = styled.div`
   `
 
 export const SearchButton = styled.button`
-  background: ${FirstColor};
+  background: ${props => props.theme.colors.primary};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -213,12 +301,12 @@ export const SearchButton = styled.button`
   cursor: pointer;
   transition: 200ms ease-in-out;
   :hover {
-    background: ${SecondColor}; 
+    background: ${props => props.theme.colors.secondary}; 
   }
 `
 
 export const SearchButtonIcon = styled(MdSearch)`
-  color: ${FifthColor};
+  color: ${props => props.theme.colors.fifth};
   height: 2.5rem;
   width: 2.5rem;
 `
@@ -230,12 +318,12 @@ export const ContentField = styled.div`
   width: 100vw;
   max-width: 90vw;
   max-height: 10vh;
-  color: ${FirstColor};
+  color: ${props => props.theme.colors.primary};
   flex: 1 1 25rem;
   gap: 2rem;
 `
 export const CloseButtonIcon = styled(RiCloseLine)`
-  color: ${FirstColor};
+  color: ${props => props.theme.colors.primary};
   transform: scale(0);
   transition: all 1s cubic-bezier(.175,.885,.32,1);
 `
@@ -248,12 +336,12 @@ export const CloseButton = styled.button`
   font-size: 1.8rem;
   border: 0;
   padding: 0;
-  color: ${FirstColor};
+  color: ${props => props.theme.colors.primary};
   transition: all 2s cubic-bezier(.175,.885,.32,1);
   `
 
 export const WeatherInfoWindow = styled.div`
-    background-color: ${FourthColor};
+    background-color: ${props => props.theme.colors.fourth};
     box-shadow: .5rem .5rem 1.5rem -.1rem rgba(0, 0, 0, .5) ;
     display: block;
     border-radius: 4rem;
@@ -261,15 +349,22 @@ export const WeatherInfoWindow = styled.div`
     min-width: 25rem;
     max-width: 25rem;
     max-height: 29.5rem;
+    cursor: grab;
     transition: all 1s cubic-bezier(.175,.885,.32,1);
     :hover {
       transform: scale(1.05);
-      background-color: ${FifthColor};
+      background-color: ${props => props.theme.colors.fifth};
       border-radius: 0 4rem 4rem 4rem;
     } &:hover ${CloseButtonIcon}{
       transform: scale(1.2);
     }
-`
+
+    ${props => props.isDragging && css`
+      border: 2rem;
+      background-color: red;
+      cursor: grabbing;
+    `}
+`;
 
 export const HeaderCityInfo = styled.div`
   height: 100%;
@@ -337,7 +432,7 @@ export const WeatherIconWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   &:first-child {
-    color: ${FirstColor};
+    color: ${props => props.theme.colors.primary};
     flex-shrink: 0;
   }
   svg {
@@ -364,7 +459,7 @@ export const WeatherSubText = styled.h5`
 `
 
 export const MoreInfo = styled.div`
-  color: ${FifthColor};
+  color: ${props => props.theme.colors.fifth};
   height: 100%;
   max-height: 5rem;
   display: flex;
@@ -373,7 +468,7 @@ export const MoreInfo = styled.div`
 `
 
 export const WindSection = styled.div`
-  background-color: ${FirstColor};
+  background-color: ${props => props.theme.colors.primary};
   height: 6rem;
   width: 11rem;
   border-radius: 4rem;
@@ -383,7 +478,7 @@ export const WindSection = styled.div`
   transition: all 2s cubic-bezier(.175,.885,.32,1);
   :hover {
     transform: scale(1.02);
-    background-color: ${SecondColor};
+    background-color: ${props => props.theme.colors.secondary};
   }
 `
 
@@ -401,7 +496,7 @@ export const WindInfo = styled.h5`
 `
 
 export const RainSection = styled.div`
-  background-color: ${FirstColor};
+  background-color: ${props => props.theme.colors.primary};
   height: 6rem;
   width: 11rem;
   border-radius: 4rem;
@@ -412,7 +507,7 @@ export const RainSection = styled.div`
   transition: all 2s cubic-bezier(.175,.885,.32,1);
   :hover {
     transform: scale(1.02);
-    background-color: ${SecondColor};
+    background-color: ${props => props.theme.colors.secondary};
   }
 `
 

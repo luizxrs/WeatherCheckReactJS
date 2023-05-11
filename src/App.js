@@ -34,14 +34,26 @@ import {
   CloseButtonIcon,
   SearchButtonIcon,
   ClearMessage,
-  SaveMessage
+  SaveMessage,
+  ChangeTheme,
+  StyledMenu,
+  CloseMenuButton,
+  MenuItemsWrapper,
 } from './AppStyles.js';
 import { useEffect, useState } from 'react';
+import { IoMdClose } from 'react-icons/io'
 import axios from 'axios'
 import { WeatherTranslate } from './hooks/weatherTranslate.js';
 import { GetWeatherIcon } from './hooks/getWeatherIcon.js';
+import { RiPaintFill } from 'react-icons/ri'
 import { ThemeProvider } from 'styled-components';
-import blue from './styles/themes/blue';
+import Violet from './styles/themes/violet';
+import Indigo from './styles/themes/indigo';
+import Red from './styles/themes/red';
+import Yellow from './styles/themes/yellow';
+import Green from './styles/themes/green';
+import Orange from './styles/themes/orange';
+import Blue from './styles/themes/blue';
 
 function App() {
   const [data, setData] = useState(JSON.parse(localStorage.getItem('tabs')) || [])
@@ -52,8 +64,8 @@ function App() {
   const [showSaveMessage, setShowSaveMessage] = useState(false)
   const [errorText, setErrorText] = useState('')
   const [weatherIcon, setWeatherIcon] = useState('')
-
-  console.log('render')
+  const [openTheme, setOpenTheme] = useState(false);
+  const [theme, setTheme] = useState(JSON.parse(localStorage.getItem('theme')) || Blue)
 
   const saveTabs = () => {
     setShowSaveMessage(true)
@@ -72,6 +84,28 @@ function App() {
       console.log(data)
     }
   }
+
+  useEffect(() => {
+    localStorage.setItem('theme', JSON.stringify(theme))
+  }, [theme])
+
+  useEffect(() => {
+    const handleEscape = event => {
+      if (event.key === 'Escape') {
+        setOpenTheme(false);
+      }
+    };
+
+    if (openTheme) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [openTheme]);
+
+
 
   useEffect(() => {
     if (cityName.length > 0) setShowErrorMessage(false);
@@ -107,36 +141,52 @@ function App() {
   }
 
   return (
-    // <ThemeProvider theme={blue}>
-      <Container>
-        <GlobalStyle />
-        <Header>
-          <SearchBox>
-            <SearchInput placeholder='Digite uma cidade!'
-              value={cityName}
-              onChange={event => setCityName(event.target.value)}
-              onKeyPress={handleKeyPress}
-            />
-            <SearchButton
-              onClick={() => searchCity()}
-            >
-              <SearchButtonIcon />
-            </SearchButton>
-          </SearchBox>
-          <SaveItems
-            onClick={() => saveTabs()}
-          >Salvar<SaveMessage show={showSaveMessage}>Salvo!</SaveMessage></SaveItems>
-          <ErrorMessage
-            show={showErrorMessage}
-          >{errorText}</ErrorMessage>
+      <ThemeProvider theme={theme}>
+        <Container>
+          <GlobalStyle />
 
-          <ClearAll onClick={() => clearData()}>
-            Limpar
-            <ClearMessage show={showClearMessage}>Limpo!</ClearMessage></ClearAll>
-        </Header>
-        <ContentField>
-          {data.length > 0 ? (data.map((info, index) => {
-            return (
+          <StyledMenu isOpen={openTheme}>
+            <MenuItemsWrapper isOpen={openTheme}>
+              <CloseMenuButton isOpen={openTheme} Color={'rgba(96, 50, 183, 1)'} onClick={() => setTheme(Violet)}></CloseMenuButton>
+              <CloseMenuButton isOpen={openTheme} Color={'rgba(77, 0, 219, 1)'} onClick={() => setTheme(Indigo)}></CloseMenuButton>
+              <CloseMenuButton isOpen={openTheme} Color={'rgba(114, 134, 211, 1)'} onClick={() => setTheme(Blue)}></CloseMenuButton>
+              <CloseMenuButton isOpen={openTheme} Color={'rgba(48, 222, 0, 1)'} onClick={() => setTheme(Green)}></CloseMenuButton>
+              <CloseMenuButton isOpen={openTheme} Color={'rgba(237, 206, 0, 1)'} onClick={() => setTheme(Yellow)}></CloseMenuButton>
+              <CloseMenuButton isOpen={openTheme} Color={'rgba(219, 127, 13, 1)'} onClick={() => setTheme(Orange)}></CloseMenuButton>
+              <CloseMenuButton isOpen={openTheme} Color={'rgba(163, 20, 20, 1)'} onClick={() => setTheme(Red)}></CloseMenuButton>
+            </MenuItemsWrapper>
+          </StyledMenu>
+
+          <ChangeTheme isOpen={openTheme} onClick={() => setOpenTheme(!openTheme)} ><RiPaintFill className='paint-icon' /><IoMdClose className='close-icon' /></ChangeTheme>
+
+          <Header>
+            <SearchBox>
+              <SearchInput placeholder='Digite uma cidade!'
+                value={cityName}
+                onChange={event => setCityName(event.target.value)}
+                onKeyPress={handleKeyPress}
+              />
+              <SearchButton
+                onClick={() => searchCity()}
+              >
+                <SearchButtonIcon />
+              </SearchButton>
+            </SearchBox>
+            <SaveItems
+              onClick={() => saveTabs()}
+            >Salvar<SaveMessage show={showSaveMessage}>Salvo!</SaveMessage></SaveItems>
+            <ErrorMessage
+              show={showErrorMessage}
+            >{errorText}</ErrorMessage>
+
+            <ClearAll onClick={() => clearData()}>
+              Limpar
+              <ClearMessage show={showClearMessage}>Limpo!</ClearMessage></ClearAll>
+          </Header>
+
+          <ContentField>
+            {data.length > 0 ? (data.map((info, index) => {
+              return (
                 <WeatherInfoWindow>
                   <CloseButton
                     onClick={() => { removeCard(index) }}><CloseButtonIcon />
@@ -172,11 +222,11 @@ function App() {
                     </RainSection>
                   </MoreInfo>
                 </WeatherInfoWindow>
-            )
-          })) : (<></>)}
-        </ContentField>
-      </Container>
-    // </ThemeProvider>
+              )
+            })) : (<></>)}
+          </ContentField>
+        </Container>
+      </ThemeProvider>
   );
 }
 

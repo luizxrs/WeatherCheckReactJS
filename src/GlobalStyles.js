@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         font-family: 'Poppins', sans-serif;
-        background: radial-gradient(circle, #8EA7E9 0%, #7286D3 100%);
+        background: ${props => props.theme.background};
         min-height: 100vh;
         height: 100%; 
     }
@@ -44,5 +44,9 @@ export const GlobalStyle = createGlobalStyle`
         font-size: 1rem;
         font-weight: 400;
         margin: 0;
+    }
+
+    * {
+        transition: all .3s ease;
     }
 `
