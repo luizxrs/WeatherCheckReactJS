@@ -1,6 +1,7 @@
 import { GlobalStyle } from './GlobalStyles.js';
 import {
   Container,
+  TopSection,
   Header,
   SearchInput,
   SearchButton,
@@ -39,6 +40,12 @@ import {
   StyledMenu,
   CloseMenuButton,
   MenuItemsWrapper,
+  FunctionsSection,
+  Credits,
+  Preposition,
+  Logo,
+  LogoWrapper,
+  ButtonsWrapper,
 } from './AppStyles.js';
 import { useEffect, useState } from 'react';
 import { IoMdClose } from 'react-icons/io'
@@ -119,7 +126,7 @@ function App() {
       return
     }
     axios.get(url).then((response) => {
-      setData(prevData => [...prevData, response.data])
+      setData(prevData => [response.data, ...prevData])
     }).catch((e) => {
       setShowErrorMessage(true);
       setErrorText('Lugar inválido!')
@@ -141,92 +148,103 @@ function App() {
   }
 
   return (
-      <ThemeProvider theme={theme}>
-        <Container>
-          <GlobalStyle />
+    <ThemeProvider theme={theme}>
+      <Container>
+        <GlobalStyle />
 
-          <StyledMenu isOpen={openTheme}>
-            <MenuItemsWrapper isOpen={openTheme}>
-              <CloseMenuButton isOpen={openTheme} Color={'rgba(96, 50, 183, 1)'} onClick={() => setTheme(Violet)}></CloseMenuButton>
-              <CloseMenuButton isOpen={openTheme} Color={'rgba(77, 0, 219, 1)'} onClick={() => setTheme(Indigo)}></CloseMenuButton>
-              <CloseMenuButton isOpen={openTheme} Color={'rgba(114, 134, 211, 1)'} onClick={() => setTheme(Blue)}></CloseMenuButton>
-              <CloseMenuButton isOpen={openTheme} Color={'rgba(48, 222, 0, 1)'} onClick={() => setTheme(Green)}></CloseMenuButton>
-              <CloseMenuButton isOpen={openTheme} Color={'rgba(237, 206, 0, 1)'} onClick={() => setTheme(Yellow)}></CloseMenuButton>
-              <CloseMenuButton isOpen={openTheme} Color={'rgba(219, 127, 13, 1)'} onClick={() => setTheme(Orange)}></CloseMenuButton>
-              <CloseMenuButton isOpen={openTheme} Color={'rgba(163, 20, 20, 1)'} onClick={() => setTheme(Red)}></CloseMenuButton>
-            </MenuItemsWrapper>
-          </StyledMenu>
+        <StyledMenu isOpen={openTheme}>
+          <MenuItemsWrapper isOpen={openTheme}>
+            <CloseMenuButton isOpen={openTheme} Color={'rgba(96, 50, 183, 1)'} onClick={() => setTheme(Violet)}></CloseMenuButton>
+            <CloseMenuButton isOpen={openTheme} Color={'rgba(77, 0, 219, 1)'} onClick={() => setTheme(Indigo)}></CloseMenuButton>
+            <CloseMenuButton isOpen={openTheme} Color={'rgba(114, 134, 211, 1)'} onClick={() => setTheme(Blue)}></CloseMenuButton>
+            <CloseMenuButton isOpen={openTheme} Color={'rgba(48, 222, 0, 1)'} onClick={() => setTheme(Green)}></CloseMenuButton>
+            <CloseMenuButton isOpen={openTheme} Color={'rgba(237, 206, 0, 1)'} onClick={() => setTheme(Yellow)}></CloseMenuButton>
+            <CloseMenuButton isOpen={openTheme} Color={'rgba(219, 127, 13, 1)'} onClick={() => setTheme(Orange)}></CloseMenuButton>
+            <CloseMenuButton isOpen={openTheme} Color={'rgba(163, 20, 20, 1)'} onClick={() => setTheme(Red)}></CloseMenuButton>
+          </MenuItemsWrapper>
+        </StyledMenu>
 
-          <ChangeTheme isOpen={openTheme} onClick={() => setOpenTheme(!openTheme)} ><RiPaintFill className='paint-icon' /><IoMdClose className='close-icon' /></ChangeTheme>
+        <ChangeTheme isOpen={openTheme} onClick={() => setOpenTheme(!openTheme)} ><RiPaintFill className='paint-icon' /><IoMdClose className='close-icon' /></ChangeTheme>
 
+        <TopSection>
           <Header>
-            <SearchBox>
-              <SearchInput placeholder='Digite uma cidade!'
-                value={cityName}
-                onChange={event => setCityName(event.target.value)}
-                onKeyPress={handleKeyPress}
-              />
-              <SearchButton
-                onClick={() => searchCity()}
-              >
-                <SearchButtonIcon />
-              </SearchButton>
-            </SearchBox>
-            <SaveItems
-              onClick={() => saveTabs()}
-            >Salvar<SaveMessage show={showSaveMessage}>Salvo!</SaveMessage></SaveItems>
-            <ErrorMessage
-              show={showErrorMessage}
-            >{errorText}</ErrorMessage>
-
-            <ClearAll onClick={() => clearData()}>
-              Limpar
-              <ClearMessage show={showClearMessage}>Limpo!</ClearMessage></ClearAll>
+            <LogoWrapper><Logo></Logo></LogoWrapper>
+            <Preposition><span>Consulte o clima de <span class='bold'>QUALQUER</span> lugar!</span></Preposition>
+            <Credits><span class='made-by'>Made by</span><a href='https://github.dev/luizxrs/' class='name'>Luiz Souza</a></Credits>
           </Header>
+          <FunctionsSection>
+            <ButtonsWrapper>
+              <SearchBox>
+                <SearchInput placeholder='Digite uma cidade!'
+                  value={cityName}
+                  onChange={event => setCityName(event.target.value)}
+                  onKeyPress={handleKeyPress}
+                />
+                <SearchButton
+                  onClick={() => searchCity()}
+                >
+                  <SearchButtonIcon />
+                </SearchButton>
+              </SearchBox>
+              <SaveItems
+                onClick={() => saveTabs()}
+              >Salvar
+              <SaveMessage show={showSaveMessage}>Salvo!</SaveMessage>
+              </SaveItems>
+              <ErrorMessage
+                show={showErrorMessage}
+              >{errorText}</ErrorMessage>
 
-          <ContentField>
-            {data.length > 0 ? (data.map((info, index) => {
-              return (
-                <WeatherInfoWindow>
-                  <CloseButton
-                    onClick={() => { removeCard(index) }}><CloseButtonIcon />
-                  </CloseButton>
-                  <HeaderCityInfo>
-                    <CityTitle>{info.main ? info.name : "Carregando"}</CityTitle>
-                  </HeaderCityInfo>
-                  <TempInfo>
-                    <ActualTemp>
-                      {info.main ? ((info.main.temp)).toFixed(1) : "00"}
-                      <ActualTempElements>°C</ActualTempElements>
-                    </ActualTemp>
-                    <SubTemperatures>
-                      <MaximumTemp>Máxima: {info.main ? ((info.main.temp_max)).toFixed(1) : "00"}º C</MaximumTemp>
-                      <MinimalTemp>Mínima: {info.main ? ((info.main.temp_min)).toFixed(1) : "00"}º C</MinimalTemp>
-                    </SubTemperatures>
-                  </TempInfo>
-                  <WeatherInfo>
-                    <WeatherIconWrapper>{GetWeatherIcon(info?.weather[0]?.icon)}</WeatherIconWrapper>
-                    <WeatherSubInfo>
-                      <WeatherText>{info.main ? WeatherTranslate(info.weather[0].main) : "00"}</WeatherText>
-                      <WeatherSubText>{info.main ? info.weather[0].description : "00"}</WeatherSubText>
-                    </WeatherSubInfo>
-                  </WeatherInfo>
-                  <MoreInfo>
-                    <WindSection>
-                      <WindText>Vento</WindText>
-                      <WindInfo>{info.main ? `${info.wind.speed} km/h` : '00'}</WindInfo>
-                    </WindSection>
-                    <RainSection>
-                      <RainText>Chuva</RainText>
-                      <RainInfo>{info.rain ? `${info.rain['1h']}mm/h` : 'S/ Chuva'}</RainInfo>
-                    </RainSection>
-                  </MoreInfo>
-                </WeatherInfoWindow>
-              )
-            })) : (<></>)}
-          </ContentField>
-        </Container>
-      </ThemeProvider>
+              <ClearAll onClick={() => clearData()}>
+                Limpar
+                <ClearMessage show={showClearMessage}>Limpo!</ClearMessage></ClearAll>
+            </ButtonsWrapper>
+          </FunctionsSection>
+        </TopSection>
+
+        <ContentField>
+          {data.length > 0 ? (data.map((info, index) => {
+            return (
+              <WeatherInfoWindow>
+                <CloseButton
+                  onClick={() => { removeCard(index) }}><CloseButtonIcon />
+                </CloseButton>
+                <HeaderCityInfo>
+                  <CityTitle>{info.main ? info.name : "Carregando"}</CityTitle>
+                </HeaderCityInfo>
+                <TempInfo>
+                  <ActualTemp>
+                    {info.main ? ((info.main.temp)).toFixed(1) : "00"}
+                    <ActualTempElements>°C</ActualTempElements>
+                  </ActualTemp>
+                  <SubTemperatures>
+                    <MaximumTemp>Máxima: {info.main ? ((info.main.temp_max)).toFixed(1) : "00"}º C</MaximumTemp>
+                    <MinimalTemp>Mínima: {info.main ? ((info.main.temp_min)).toFixed(1) : "00"}º C</MinimalTemp>
+                  </SubTemperatures>
+                </TempInfo>
+                <WeatherInfo>
+                  <WeatherIconWrapper>{GetWeatherIcon(info?.weather[0]?.icon)}</WeatherIconWrapper>
+                  <WeatherSubInfo>
+                    <WeatherText>{info.main ? WeatherTranslate(info.weather[0].main) : "00"}</WeatherText>
+                    <WeatherSubText>{info.main ? info.weather[0].description : "00"}</WeatherSubText>
+                  </WeatherSubInfo>
+                </WeatherInfo>
+                <MoreInfo>
+                  <WindSection>
+                    <WindText>Vento</WindText>
+                    <WindInfo>{info.main ? `${info.wind.speed} km/h` : '00'}</WindInfo>
+                  </WindSection>
+                  <RainSection>
+                    <RainText>Chuva</RainText>
+                    <RainInfo>{info.rain ? `${info.rain['1h']}mm/h` : 'S/ Chuva'}</RainInfo>
+                  </RainSection>
+                </MoreInfo>
+              </WeatherInfoWindow>
+            )
+          })) : (<></>)}
+        </ContentField>
+      </Container>
+    </ThemeProvider>
   );
 }
 

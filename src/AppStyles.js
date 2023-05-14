@@ -3,6 +3,8 @@ import { RiCloseLine } from 'react-icons/ri'
 import { MdSearch } from 'react-icons/md'
 import { lighten, darken, modularScale } from 'polished'
 import blue from "./styles/themes/blue";
+import logo from './assets/svgs/logo.svg'
+import logoIcon from './assets/svgs/logoIcon.svg'
 
 
 export const Container = styled.div`
@@ -136,9 +138,11 @@ export const ClearAll = styled.div`
   background-color: ${props => props.theme.colors.fourth};
   border-radius: 3rem;
   min-height: 6rem;
-  margin: 5rem 3vw 8rem 0;
+  max-height: 6rem;
+  margin-right: 3vw;
   cursor: pointer;
-  transition: all 1s cubic-bezier(.175,.885,.32,1);order: 3;
+  transition: all 1s cubic-bezier(.175,.885,.32,1);
+  order: 3;
   :hover {
     transform: scale(1.1);
     letter-spacing: .3rem;
@@ -159,18 +163,17 @@ export const ClearMessage = styled.div`
   font-weight: 700;
   font-size: 1.5rem;
   letter-spacing: .2rem;
-  transition: all 2s cubic-bezier(.175,.885,.32,1);
-  margin-top: ${(props) => props.show ? "-9rem" : "-4rem"};
+  transition: all 1.5s cubic-bezier(.175,.885,.32,1);
+  margin-top: ${(props) => props.show ? "-9rem" : "-5rem"};
   opacity: ${(props) => props.show ? "100" : "0"};
   
   @media (max-width: 1080px) {
-      margin-top: ${(props) => props.show ? "9rem" : "4rem"}; 
+      margin-top: ${(props) => props.show ? "9rem" : "5rem"}; 
   }
 
   @media (max-width: 610px) {
-    margin-top: ${(props) => props.show ? "9rem" : "4rem"}; 
+    margin-top: ${(props) => props.show ? "-9rem" : "-5rem"}; 
   }
-
 `
 
 export const SaveMessage = styled.div`
@@ -179,19 +182,17 @@ export const SaveMessage = styled.div`
   font-weight: 700;
   font-size: 1.5rem;
   letter-spacing: .2rem;
-  transition: all 2s cubic-bezier(.175,.885,.32,1);
-  margin-top: ${(props) => props.show ? "-9rem" : "-4rem"};
+  transition: all 1.5s cubic-bezier(.175,.885,.32,1);
+  margin-top: ${(props) => props.show ? "-9rem" : "-5rem"};
   opacity: ${(props) => props.show ? "100" : "0"};
-
+  
   @media (max-width: 1080px) {
-      margin-top: ${(props) => props.show ? "9rem" : "4rem"}; 
+      margin-top: ${(props) => props.show ? "9rem" : "5rem"}; 
   }
 
   @media (max-width: 610px) {
-    margin-top: ${(props) => props.show ? "9rem" : "4rem"}; 
+    margin-top: ${(props) => props.show ? "9rem" : "5rem"}; 
   }
-
-
 `
 
 export const SaveItems = styled.div`
@@ -207,8 +208,10 @@ max-width: 15rem;
 box-shadow: .5rem .5rem 1.5rem -.1rem rgba(0, 0, 0, .3) ;
 background-color: ${props => props.theme.colors.fourth};
 border-radius: 3rem;
+height: 100%;
 min-height: 6rem;
-margin: 5rem 0 8rem 3vw;
+max-height: 6rem;
+margin-left: 3vw;
 order: 1;
 cursor: pointer;
     transition: all 1s cubic-bezier(.175,.885,.32,1);
@@ -225,19 +228,131 @@ cursor: pointer;
     margin: 0;
   }
 `
-
 export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5rem -.3rem rgba(0, 0, 0, .6);
+  outline: .2rem solid rgba(0, 0, 0, 0.1);
+  height: 6rem;
+  width: 100vw;
+
+  @media (max-width: 800px) {
+
+  }
+`
+
+export const LogoWrapper = styled.div`
+  margin-left: 3vw;
+  display: flex;
+  width: 20%;
+  
+  @media (max-width: 800px) {
+    width: 20%;
+  }
+`
+export const Logo = styled.img`
+  width: 22rem;
+  content: url(${logo});
+
+  
+  @media (max-width: 800px) {
+    content: url(${logoIcon});
+    max-width: 4rem;
+  }
+`
+
+export const Preposition = styled.div`
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: .2rem;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  .bold {
+    text-shadow: 0 0 2rem rgba(255, 255, 255, .5);
+  };
+
+  
+  @media (max-width: 800px) {
+    width: 80%;
+  }
+
+`
+
+export const Credits = styled.div`
+  margin-right: 3vw;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: .1rem;
+  line-height: 120%;
+  width: 20%;
+  text-align: end;
+  .made-by {
+    font-weight: 500;
+    color: ${props => props.theme.colors.fourth};
+  }
+  .name {
+    color: white;
+    text-decoration: none;
+    font-size: larger;
+    text-shadow: 0 0 2rem rgba(255, 255, 255, .5);
+  }
+
+  
+  @media (max-width: 800px) {
+    font-size: 1rem;
+    width: 20%;
+  }
+`
+
+
+export const TopSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`
+export const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
 
   @media (max-width: 1080px) {
+    gap: 1rem;
+    justify-content: center;
+    max-width: 60vw;
+    flex-wrap: wrap;
+  }
+`
+
+export const FunctionsSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10rem;
+
+  @media (max-width: 1080px) {
+    justify-content: center;
+  }
+
+  /* @media (max-width: 1080px) {
     margin-bottom: 5rem;
     justify-content: center;
     gap: 1rem;
     max-width: 60vw;
     flex-wrap: wrap;
-  }
+  } */
 
 `
 export const ErrorMessage = styled.div`
@@ -251,7 +366,7 @@ export const ErrorMessage = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   transition: all 2s cubic-bezier(.175,.885,.32,1);
-  top: ${(props) => props.show ? "3.5rem" : "6rem"};
+  top: ${(props) => props.show ? "8.5rem" : "12.5rem"};
 `
 
 export const SearchInput = styled.input`
@@ -271,15 +386,14 @@ export const SearchBox = styled.div`
     width: 100%;
     max-width: 55vw;
     min-width: 55vw;
-    margin-top: 5rem;
     box-shadow: .5rem .5rem 1.5rem -.1rem rgba(0, 0, 0, .3) ;
     background-color: ${props => props.theme.colors.fourth};
     border-radius: 3rem;
-    min-height: 6rem;
+    height: 100%;
+  min-height: 6rem;
+  max-height: 6rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8rem;
     transition: all 1s cubic-bezier(.175,.885,.32,1);
     order: 2;
     :hover {
@@ -337,10 +451,11 @@ export const ContentField = styled.div`
   justify-content: center;
   width: 100vw;
   max-width: 90vw;
-  max-height: 10vh;
   color: ${props => props.theme.colors.primary};
   flex: 1 1 25rem;
   gap: 2rem;
+  margin-top: 5rem;
+  margin-bottom: 4rem;
 `
 export const CloseButtonIcon = styled(RiCloseLine)`
   color: ${props => props.theme.colors.primary};
@@ -391,6 +506,10 @@ export const HeaderCityInfo = styled.div`
 
 export const CityTitle = styled.h3`
   font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 21rem;
 `
 
 
@@ -400,7 +519,7 @@ export const TempInfo = styled.div`
   padding: 1.5rem;
   align-items: center;
   height: 100%;
-  gap: 1rem;
+  gap: 1.6rem;
   max-height: 5rem;
 `
 
