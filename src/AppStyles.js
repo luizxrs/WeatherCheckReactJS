@@ -171,8 +171,13 @@ export const ClearMessage = styled.div`
       margin-top: ${(props) => props.show ? "9rem" : "5rem"}; 
   }
 
-  @media (max-width: 610px) {
+  /* @media (max-width: 610px) {
     margin-top: ${(props) => props.show ? "-9rem" : "-5rem"}; 
+  }
+   */
+
+  @media (max-width: 610px) {
+    margin-top: ${(props) => props.show ? "-87px" : "-50px"}; 
   }
 `
 
@@ -189,9 +194,13 @@ export const SaveMessage = styled.div`
   @media (max-width: 1080px) {
       margin-top: ${(props) => props.show ? "9rem" : "5rem"}; 
   }
-
+/* 
   @media (max-width: 610px) {
     margin-top: ${(props) => props.show ? "9rem" : "5rem"}; 
+  } */
+
+  @media (max-width: 610px) {
+    margin-top: ${(props) => props.show ? "87px" : "50px"}; 
   }
 `
 
